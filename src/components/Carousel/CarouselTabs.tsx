@@ -7,7 +7,7 @@ interface ICarouselTabs {
   activeIndex: number
 }
 
-export default function CarouselTabs({activeIndex,setActiveIndex,tabs}:ICarouselTabs) {
+export default function CarouselTabs({activeIndex,tabs}:ICarouselTabs) {
 
   return (
     <div className='absolute bottom-0 left-0 w-[50%] flex justify-center items-center'>

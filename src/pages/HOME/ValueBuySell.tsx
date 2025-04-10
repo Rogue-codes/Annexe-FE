@@ -1,4 +1,3 @@
-import React from 'react'
 import { buyvalue } from '../../assets'
 
 export default function ValueBuySell() {

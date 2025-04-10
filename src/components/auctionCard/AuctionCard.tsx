@@ -1,4 +1,3 @@
-import React from 'react'
 import { mona, } from '../../assets'
 
 export default function AuctionCard() {

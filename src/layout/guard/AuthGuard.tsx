@@ -2,7 +2,7 @@
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { paths } from "../../routes/paths";
+import { paths } from "../../path/path";
 
 interface IAuthGuardProps {
   children: ReactNode;
@@ -16,7 +16,7 @@ const AuthGuard = ({ children }: IAuthGuardProps) => {
     return children;
   }
 
-  return <Navigate to={paths.login} state={{ expired: true }} />;
+  return <Navigate to={paths.HOME} state={{ expired: true }} />;
 };
 
 export default AuthGuard;

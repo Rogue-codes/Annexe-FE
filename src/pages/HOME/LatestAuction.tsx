@@ -1,4 +1,3 @@
-import React from 'react'
 import AuctionCard from '../../components/auctionCard/AuctionCard'
 
 interface ILatestAuction {

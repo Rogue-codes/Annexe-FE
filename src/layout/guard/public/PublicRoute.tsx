@@ -2,7 +2,7 @@
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { paths } from "../../../routes/paths";
+import { paths } from "../../../path/path";
 interface IPublicRouteProps {
   children: ReactNode;
 }
@@ -20,7 +20,7 @@ const PublicRoute = ({ children }: IPublicRouteProps) => {
 
   return (
     <Navigate
-      to={paths.dashboard}
+      to={paths.HOME}
       state={{ expired: true }}
     />
   );

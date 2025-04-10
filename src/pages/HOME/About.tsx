@@ -1,4 +1,3 @@
-import React from 'react'
 import { about } from '../../assets'
 
 export default function About() {

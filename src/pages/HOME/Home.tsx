@@ -1,4 +1,3 @@
-import React from 'react'
 import { blurImg } from '../../assets'
 import Carousel from '../../components/Carousel/Carousel'
 import ValueBuySell from './ValueBuySell'
