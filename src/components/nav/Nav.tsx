@@ -18,7 +18,7 @@ export default function Nav() {
     },
     {
       label: "Auction",
-      path: paths.AUCTION
+      path: paths.AUCTIONS
     },
     {
       label: "Results",

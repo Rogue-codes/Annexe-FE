@@ -9,7 +9,10 @@ export default function AppLayout({children}:IAppLayout) {
   return (
     <div>
       <Nav />
-      {children}
+      <div className='pt-26'>
+        {children}
+      </div>
+      
       <Footer />
     </div>
   )

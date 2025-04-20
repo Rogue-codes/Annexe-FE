@@ -6,7 +6,7 @@ interface IDashboardLayout {
 export default function DashboardLayout({ children }: IDashboardLayout) {
   return (
     <div className="w-full h-screen overflow-y-scroll bg-[#F4FBF7]">
-      <div className="w-[calc(100vw-17vw)] pt-12 ml-[17vw] h-full  px-9">
+      <div className="w-[calc(100vw-17vw)] pt-12 ml-[17vw] h-full">
         <Nav />
       {children}
       </div>

@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom'
 import { mona, } from '../../assets'
+import { paths } from '../../path/path'
 
 export default function AuctionCard() {
+    const navigate = useNavigate()
   return (
-    <div className='w-[17rem]'>
+    <div className='w-[23%] mb-12'>
         <div className='w-full h-[271px]'>
             <img src={mona} className='w-full h-full object-cover' alt="" />
         </div>
@@ -22,7 +25,7 @@ export default function AuctionCard() {
             <p className='text-xs italic'>auction ends in: 14.9.2022 10:00:00 GMT+8</p>
         </div>
 
-        <button className='py-2 cursor-pointer px-5 mt-6 border-2 hover:bg-[#004663] hover:text-white transition-all'>
+        <button className='py-2 cursor-pointer px-5 mt-6 border-2 hover:bg-[#004663] hover:text-white transition-all' onClick={()=>navigate(paths.AUCTION)}>
         Bid now
         </button>
       

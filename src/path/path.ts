@@ -1,8 +1,12 @@
 export const paths = {
     HOME:'/',
-    AUCTION:'/auctions',
+    AUCTIONS:'/auctions',
+    AUCTION:'/auction',
     RESULT:'/results',
     BVS:'/buy-value-sell',
     ABOUT:'/about',
-    CONTACT:'/contact'
+    CONTACT:'/contact',
+    REGISTER:'/register',
+    LOGIN:'/login',
+    PROFILE:'/profile',
 }

@@ -1,14 +1,11 @@
 import { Outlet } from "react-router-dom";
-import DashboardLayout from "./DashboardLayout";
 import AuthGuard from "./guard/AuthGuard";
 
-export default function AppOutlet() {
+export default function ProfileOutlet() {
   return (
     <div>
       <AuthGuard>
-         <DashboardLayout>
         <Outlet />
-      </DashboardLayout>
       </AuthGuard>
      
     </div>
