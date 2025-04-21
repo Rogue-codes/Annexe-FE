@@ -6,7 +6,11 @@ export interface ILoginForm {
   email: string;
   password: string;
 }
-export default function RegisterForm() {
+
+interface IRegisterForm{
+  setIsRegisterSuccess: React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function RegisterForm({setIsRegisterSuccess}:IRegisterForm) {
   const {
     // setValue,
     // watch,
@@ -39,7 +43,7 @@ export default function RegisterForm() {
       <p className="w-[90%] mt-9">Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.</p>
 
       <div className="mt-16 flex justify-between items-center">
-        <button className="border-2 py-3 px-6 hover:bg-[#004663] cursor-pointer hover:text-white transition-all">
+        <button className="border-2 py-3 px-6 hover:bg-[#004663] cursor-pointer hover:text-white transition-all" onClick={()=>setIsRegisterSuccess(true)}>
         Register
         </button>
       </div>

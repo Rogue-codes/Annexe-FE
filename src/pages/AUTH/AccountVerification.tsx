@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { reg } from "../../assets";
 import Input from "../../components/input/Input";
 import { ILoginForm } from "./LoginForm";
