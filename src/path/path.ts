@@ -9,4 +9,5 @@ export const paths = {
     REGISTER:'/register',
     LOGIN:'/login',
     PROFILE:'/profile',
+    VERIFICATION:'/verification',
 }

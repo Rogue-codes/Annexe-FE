@@ -9,6 +9,7 @@ import Results from './pages/RESULTS/Results'
 import Register from './pages/AUTH/Register'
 import Profile from './pages/PROFILE/Profile'
 import ProfileOutlet from './layout/ProfileOutlet'
+import AccountVerification from './pages/AUTH/AccountVerification'
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path={paths.RESULT} element={<Results />} />
           <Route path={paths.BVS} element={<BuyValueSell />} />
           <Route path={paths.REGISTER} element={<Register />} />
-          {/* <Route path={paths.PROFILE} element={<Profile />} /> */}
+          <Route path={paths.VERIFICATION} element={<AccountVerification />} />
 
           <Route element={<ProfileOutlet />}>
             <Route

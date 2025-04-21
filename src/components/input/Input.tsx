@@ -26,7 +26,7 @@ export default function Input({ label, control, name, type }: Iinput) {
             onChange={(e) => {
               field.onChange(e);
             }}
-            className=" px-4 pb-3 w-[27rem] border-b-2 mt-2 bg-white focus:outline-none"
+            className=" px-4 pb-3 w-full border-b-2 mt-2 bg-white focus:outline-none"
             type={type ? inputType : "text"}
             name=""
             id=""

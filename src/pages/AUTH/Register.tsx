@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { reg } from "../../assets";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import RegistrationSuccess from "./RegistrationSuccess";
 
 export default function Register() {
+  const [isRegisterSucessful, setIsRegisterSuccess] = useState(true);
   return (
     <div>
       <div className="relative h-[20rem] w-full">
@@ -14,12 +17,17 @@ export default function Register() {
           Sign in / Register
         </h1>
       </div>
-
-      <div className="mt-16 mb-24 w-full flex gap-24 justify-center items-start px-44">
-        <LoginForm />
-        <div className="border  h-[80vh]"></div>
-        <RegisterForm />
-      </div>
+      {isRegisterSucessful ? (
+        <RegistrationSuccess />
+      ) : (
+        <div>
+          <div className="mt-16 mb-24 w-full flex gap-24 justify-center items-start px-44">
+            <LoginForm />
+            <div className="border  h-[80vh]"></div>
+            <RegisterForm />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
