@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { reg } from "../../assets";
 import Input from "../../components/input/Input";
 import { ILoginForm } from "./LoginForm";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { paths } from "../../path/path";
+import { useVerifyUserMutation } from "../../api/auth.api";
+import { enqueueSnackbar } from "notistack";
 
 export default function AccountVerification() {
   const {
@@ -22,15 +24,46 @@ export default function AccountVerification() {
     },
   });
 
+  const [params] = useSearchParams();
+
+  const email: string = params.get("email") as string;
+  const token: string = params.get("code") as string;
+
+  console.log("params", { email, token });
+
   const [isVerificationSuccess, setIsVerificationSuccess] = useState(false);
 
   const onSubmit = () => {
-    setIsVerificationSuccess(true)
-  }
+    setIsVerificationSuccess(true);
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [verifyBusiness, { isLoading, isSuccess }] = useVerifyUserMutation();
+
+  const handleVerifyBusiness = () => {
+    verifyBusiness({
+      email,
+      otp: token,
+    })
+      .unwrap()
+      .then((res) => {
+        enqueueSnackbar(res.message, { variant: "success" });
+        console.log(res);
+      })
+      .catch((err) => {
+        enqueueSnackbar(err?.data?.message, { variant: "error" });
+      });
+  };
+
+  useEffect(() => {
+    if (!!email || !!token) {
+      handleVerifyBusiness();
+    }
+  }, [email, token]);
+
   return (
-    <div>
+    <div className="mb-24">
       <div className="relative h-[23rem] w-full">
         <div className="absolute w-full left-0 top-0">
           <img src={reg} className="w-full h-full object-cover" alt="" />
@@ -44,7 +77,7 @@ export default function AccountVerification() {
       {!isVerificationSuccess ? (
         <div className="px-44">
           <h1 className="text-3xl text-center py-16 font-bold">
-            Thank you for your verification
+            {isLoading ? "Loading..." : "Thank you for your verification"}
           </h1>
 
           <div className="px-12 primary-bg flex">
@@ -68,71 +101,76 @@ export default function AccountVerification() {
             </div>
           </div>
 
-          <div className="px-24 my-12">
-            <form action="" onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex justify-between">
-                <div className="w-[48%]">
-                  <Input name={""} label="First Name" control={control} />
+          {isSuccess && (
+            <div className="px-24 my-12">
+              <form action="" onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex justify-between">
+                  <div className="w-[48%]">
+                    <Input name={""} label="First Name" control={control} />
+                  </div>
+
+                  <div className="w-[48%]">
+                    <Input name={""} label="Last Name" control={control} />
+                  </div>
                 </div>
 
-                <div className="w-[48%]">
-                  <Input name={""} label="Last Name" control={control} />
-                </div>
-              </div>
-
-              <div className="w-full mt-6">
-                <Input name={""} label="Email Address" control={control} />
-              </div>
-
-              <div className="w-full mt-6">
-                <Input
-                  name={""}
-                  label="Phone Number (Whatsapp)"
-                  control={control}
-                />
-              </div>
-
-              <h1 className="text-lg font-bold py-12">Bank Details</h1>
-
-              <div className="w-full flex justify-between items-center">
-                <div className="w-[48%]">
-                  <Input name={""} label="Account Number" control={control} />
+                <div className="w-full mt-6">
+                  <Input name={""} label="Email Address" control={control} />
                 </div>
 
-                <div className="w-[48%]">
-                  <Input name={""} label="Select Bank" control={control} />
-                </div>
-              </div>
-
-              <h1 className="text-lg font-bold py-12">Shipping Details</h1>
-
-              <div className="w-full flex justify-between items-center">
-                <div className="w-[48%]">
-                  <Input name={""} label="Address 1" control={control} />
+                <div className="w-full mt-6">
+                  <Input
+                    name={""}
+                    label="Phone Number (Whatsapp)"
+                    control={control}
+                  />
                 </div>
 
-                <div className="w-[48%]">
-                  <Input name={""} label="Address 2" control={control} />
-                </div>
-              </div>
+                <h1 className="text-lg font-bold py-12">Bank Details</h1>
 
-              <div className="w-full mt-6 flex justify-between items-center">
-                <div className="w-[48%]">
-                  <Input name={""} label="Country" control={control} />
+                <div className="w-full flex justify-between items-center">
+                  <div className="w-[48%]">
+                    <Input name={""} label="Account Number" control={control} />
+                  </div>
+
+                  <div className="w-[48%]">
+                    <Input name={""} label="Select Bank" control={control} />
+                  </div>
                 </div>
 
-                <div className="w-[48%]">
-                  <Input name={""} label="State" control={control} />
-                </div>
-              </div>
+                <h1 className="text-lg font-bold py-12">Shipping Details</h1>
 
-              <div className="w-full mt-16 flex justify-end">
-                <button type="submit" className="py-3 px-6 border-2 hover:bg-[#004663] font-bold cursor-pointer hover:text-white transition-all">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+                <div className="w-full flex justify-between items-center">
+                  <div className="w-[48%]">
+                    <Input name={""} label="Address 1" control={control} />
+                  </div>
+
+                  <div className="w-[48%]">
+                    <Input name={""} label="Address 2" control={control} />
+                  </div>
+                </div>
+
+                <div className="w-full mt-6 flex justify-between items-center">
+                  <div className="w-[48%]">
+                    <Input name={""} label="Country" control={control} />
+                  </div>
+
+                  <div className="w-[48%]">
+                    <Input name={""} label="State" control={control} />
+                  </div>
+                </div>
+
+                <div className="w-full mt-16 flex justify-end">
+                  <button
+                    type="submit"
+                    className="py-3 px-6 border-2 hover:bg-[#004663] font-bold cursor-pointer hover:text-white transition-all"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
       ) : (
         <div className="px-44 my-24">
@@ -145,10 +183,16 @@ export default function AccountVerification() {
             price when you checkout
           </p>
           <div className="flex justify-center items-center gap-12 my-12">
-            <button className="py-3 px-6 border-2 hover:bg-[#004663] hover:text-white transition-all cursor-pointer font-bold" onClick={()=>navigate(paths.REGISTER)}>
+            <button
+              className="py-3 px-6 border-2 hover:bg-[#004663] hover:text-white transition-all cursor-pointer font-bold"
+              onClick={() => navigate(paths.REGISTER)}
+            >
               Create an Auction
             </button>
-            <button className="py-3 px-6 border-2 hover:bg-[#004663] hover:text-white transition-all cursor-pointer font-bold" onClick={()=>navigate(paths.AUCTIONS)}>
+            <button
+              className="py-3 px-6 border-2 hover:bg-[#004663] hover:text-white transition-all cursor-pointer font-bold"
+              onClick={() => navigate(paths.AUCTIONS)}
+            >
               Start bidding
             </button>
           </div>

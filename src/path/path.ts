@@ -6,8 +6,8 @@ export const paths = {
     BVS:'/buy-value-sell',
     ABOUT:'/about',
     CONTACT:'/contact',
-    REGISTER:'/register',
-    LOGIN:'/login',
+    REGISTER:'/auth/register',
+    LOGIN:'/auth/login',
     PROFILE:'/profile',
-    VERIFICATION:'/verification',
+    VERIFICATION:'/auth/verification',
 }

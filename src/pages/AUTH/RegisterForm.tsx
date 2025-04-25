@@ -1,29 +1,28 @@
-import { useForm } from "react-hook-form";
+import { Control, UseFormHandleSubmit, useForm } from "react-hook-form";
 import Input from "../../components/input/Input";
 import { fb_, google } from "../../assets";
+import { IRegisterForm } from "./Register";
 
 export interface ILoginForm {
   email: string;
   password: string;
 }
 
-interface IRegisterForm{
-  setIsRegisterSuccess: React.Dispatch<React.SetStateAction<boolean>>
+interface IRegisterForm_ {
+  setIsRegisterSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  control: Control<IRegisterForm, any, IRegisterForm>;
+  handleSubmit: UseFormHandleSubmit<IRegisterForm, IRegisterForm>;
+  onSubmit: () => void;
+  isLoading: boolean;
+  isValid: () => boolean
 }
-export default function RegisterForm({setIsRegisterSuccess}:IRegisterForm) {
-  const {
-    // setValue,
-    // watch,
-    // register,
-    control,
-    // formState: { isValid },
-    // reset,
-  } = useForm<ILoginForm>({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+export default function RegisterForm({
+  isValid,
+  control,
+  onSubmit,
+  isLoading,
+}: IRegisterForm_) {
+  console.log("isValid",isValid)
   return (
     <div className="w-[27rem]">
       <p className="text-3xl font-bold py-6">Register</p>
@@ -40,23 +39,31 @@ export default function RegisterForm({setIsRegisterSuccess}:IRegisterForm) {
         />
       </div>
 
-      <p className="w-[90%] mt-9">Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.</p>
+      <p className="w-[90%] mt-9">
+        Your personal data will be used to support your experience throughout
+        this website, to manage access to your account, and for other purposes
+        described in our privacy policy.
+      </p>
 
       <div className="mt-16 flex justify-between items-center">
-        <button className="border-2 py-3 px-6 hover:bg-[#004663] cursor-pointer hover:text-white transition-all" onClick={()=>setIsRegisterSuccess(true)}>
-        Register
+        <button
+          className="border-2 py-3 px-6 hover:bg-[#004663] cursor-pointer hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={onSubmit}
+          disabled={isLoading || !isValid()}
+        >
+          {isLoading ? "Loading..." : "Register"}
         </button>
       </div>
 
       <div className="mt-12">
         <button className="flex gap-5 justify-start items-center py-3 px-6 bg-[#2668CB]">
-            <img src={fb_} alt="" />
-            <p className="text-white font-bold">Register with Facebook</p>
+          <img src={fb_} alt="" />
+          <p className="text-white font-bold">Register with Facebook</p>
         </button>
 
         <button className="flex mt-6 gap-5 justify-start items-center py-3 px-6 bg-[#C34444]">
-        <img src={google} alt="" />
-        <p className="text-white font-bold">Register with Google</p>
+          <img src={google} alt="" />
+          <p className="text-white font-bold">Register with Google</p>
         </button>
       </div>
     </div>

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Control, Controller } from "react-hook-form";
-import { ILoginForm } from "../../pages/AUTH/LoginForm";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 interface Iinput {
   label: string;
-  control: Control<ILoginForm, any>;
+  control: Control<any, any>;
   name: any;
   type?: string;
 }
