@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { reg } from "../../assets";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import RegistrationSuccess from "./RegistrationSuccess";
 import { useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
-import { useNavigate } from "react-router-dom";
-import { paths } from "../../path/path";
 import { useRegisterMutation } from "../../api/auth.api";
 
 export interface IRegisterForm {
@@ -15,9 +12,7 @@ export interface IRegisterForm {
 }
 
 export default function Register() {
-  const [isRegisterSuccessful, setIsRegisterSuccess] = useState(false);
   const [register_, { isLoading, isSuccess }] = useRegisterMutation();
-  const navigate = useNavigate();
   const {
     // setValue,
     watch,
@@ -43,9 +38,8 @@ export default function Register() {
     register_({ ...formVal })
       .unwrap()
       .then((res: any) => {
-        enqueueSnackbar("Registration Successful", { variant: "success" });
-        // navigate(`${paths.REGISTER}?verify=true`)
-        // window.location.reload()
+        console.log(res)
+        enqueueSnackbar(res?.message, { variant: "success" });
       })
       .catch((err: any) => {
         console.log(err);
@@ -73,7 +67,6 @@ export default function Register() {
             <RegisterForm
               onSubmit={onSubmit}
               control={control}
-              setIsRegisterSuccess={setIsRegisterSuccess}
               handleSubmit={handleSubmit}
               isLoading={isLoading}
               isValid={isValid}

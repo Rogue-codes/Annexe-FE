@@ -26,6 +26,7 @@ const Select: React.FC<SelectProps> = ({
   required = false,
   className = "",
 }) => {
+    console.log(required)
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const selectRef = useRef<HTMLDivElement>(null);

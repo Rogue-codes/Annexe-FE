@@ -1,4 +1,4 @@
-import { Control, UseFormHandleSubmit, useForm } from "react-hook-form";
+import { Control, UseFormHandleSubmit } from "react-hook-form";
 import Input from "../../components/input/Input";
 import { fb_, google } from "../../assets";
 import { IRegisterForm } from "./Register";
@@ -9,7 +9,6 @@ export interface ILoginForm {
 }
 
 interface IRegisterForm_ {
-  setIsRegisterSuccess: React.Dispatch<React.SetStateAction<boolean>>;
   control: Control<IRegisterForm, any, IRegisterForm>;
   handleSubmit: UseFormHandleSubmit<IRegisterForm, IRegisterForm>;
   onSubmit: () => void;
