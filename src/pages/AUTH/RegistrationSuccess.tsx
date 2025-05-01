@@ -2,7 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { paths } from "../../path/path";
 import { useEffect, useState } from "react";
 
-export default function RegistrationSuccess() {
+interface IRegistrationSuccess {
+  email: string
+}
+export default function RegistrationSuccess({email}:IRegistrationSuccess) {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(120); // 2 minutes in seconds
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -42,7 +45,7 @@ export default function RegistrationSuccess() {
       <h1 className="text-3xl font-bold text-center">Check your email</h1>
       <p className="text-lg font-medium w-[40%] mx-auto my-12 text-center">
         We have receive your registration info, please check your email
-        (d********com) for the confirmation link to sign in (please note to
+        ({email.substring(0,3)}********com) for the confirmation link to sign in (please note to
         check your spam folder too, in case you don't get it in your inbox)
       </p>
       <div className="flex flex-col items-center justify-center">

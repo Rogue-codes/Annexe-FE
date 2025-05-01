@@ -2,14 +2,16 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { userSlice } from "./authSlice";
 import { authApi } from "../api/auth.api";
+import { bankApi } from "../api/bank.api";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
+    [bankApi.reducerPath]: bankApi.reducer,
     auth: userSlice.reducer,
   },
 
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware).concat(bankApi.middleware),
 
 });
 

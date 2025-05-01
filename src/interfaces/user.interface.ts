@@ -15,11 +15,11 @@ export interface IUser {
   isAdmin: boolean;  
   isRegistrationComplete: boolean;  
   bankDetails: {
-    accountNumber: number;
+    accountNumber: string;
     accountName: string;
     bank: {
       bankName: string;
-      bankCode: number;
+      bankCode: string;
     };
   }[];
 }

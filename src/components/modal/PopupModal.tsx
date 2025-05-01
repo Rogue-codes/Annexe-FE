@@ -9,7 +9,7 @@ interface IPopupModal {
 export default function PopupModal({setShowModal}:IPopupModal) {
   const navigate = useNavigate()
   return (
-    <div className="h-[34.5rem] p-16 text-white relative z-[99999999999999] w-[60vw] primary-bg">
+    <div className=" p-16 text-white relative z-[99999999999999] w-[60vw] primary-bg">
       <IoMdCloseCircleOutline
         className="absolute top-5 right-6 cursor-pointer"
         color="white"

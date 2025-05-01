@@ -3,6 +3,10 @@ import Input from "../../components/input/Input";
 import { fb_, google } from "../../assets";
 import { paths } from "../../path/path";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../api/auth.api";
+import { enqueueSnackbar } from "notistack";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../config/authSlice";
 
 export interface ILoginForm {
   email: string;
@@ -10,12 +14,9 @@ export interface ILoginForm {
 }
 export default function LoginForm() {
   const {
-    // setValue,
-    // watch,
-    // register,
+    handleSubmit,
     control,
     // formState: { isValid },
-    // reset,
   } = useForm<ILoginForm>({
     defaultValues: {
       email: "",
@@ -24,10 +25,32 @@ export default function LoginForm() {
   });
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const handleVerifyBusiness = (values: ILoginForm) => {
+    login(values)
+      .unwrap()
+      .then((res) => {
+        enqueueSnackbar(res.message, { variant: "success" });
+        dispatch(loginUser({
+          user: res.data,
+          access_token: res.access_token
+        }))
+        navigate(paths.PROFILE);
+      })
+      .catch((err) => {
+        enqueueSnackbar(err?.data?.message, { variant: "error" });
+      });
+  };
+
   return (
     <div className="">
       <p className="text-3xl font-bold py-6">Sign in</p>
-      <div className="mt-5">
+      <form action="" onSubmit={handleSubmit(handleVerifyBusiness)}>
+            <div className="mt-5">
         <Input name="email" control={control} label="Email address" />
       </div>
 
@@ -42,8 +65,9 @@ export default function LoginForm() {
 
       <div className="mt-16 w-full flex justify-between items-center">
         <button
-          className="border-2 py-3 px-6 hover:bg-[#004663] cursor-pointer hover:text-white transition-all"
-          onClick={()=>navigate(paths.PROFILE)}
+          className="border-2 py-3 px-6 hover:bg-[#004663] cursor-pointer hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          type="submit"
+          disabled={isLoading}
         >
           sign in
         </button>
@@ -52,6 +76,8 @@ export default function LoginForm() {
           Lost your password
         </p>
       </div>
+      </form>
+  
 
       <div>
         <p className="w-[80%] mt-12 mb-5">

@@ -20,12 +20,7 @@ export default function Register() {
     control,
     // reset,
     handleSubmit,
-  } = useForm<IRegisterForm>({
-    // defaultValues: {
-    //   email: "",
-    //   password: "",
-    // },
-  });
+  } = useForm<IRegisterForm>({});
 
   const formVal = watch();
   console.log("formVal",formVal)
@@ -53,17 +48,17 @@ export default function Register() {
           <img src={reg} className="w-full h-full object-cover" alt="" />
         </div>
 
-        <h1 className="text-7xl relative pt-64 pl-16 font-bold text-white">
+        <h1 className="text-7xl relative pt-48 pl-16 font-bold text-white">
           Sign in / Register
         </h1>
       </div>
       {isSuccess ? (
-        <RegistrationSuccess />
+        <RegistrationSuccess email={formVal.email} />
       ) : (
         <div>
           <div className="mt-16 mb-24 w-full flex gap-24 justify-center items-start px-44">
             <LoginForm />
-            <div className="border  h-[80vh]"></div>
+            <div className="border  h-[85vh]"></div>
             <RegisterForm
               onSubmit={onSubmit}
               control={control}

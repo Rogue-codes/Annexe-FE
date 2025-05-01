@@ -1,19 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 interface SelectOption {
+  id:number
   value: string;
   label: string;
 }
 
 interface SelectProps {
   label: string;
-  options: SelectOption[];
+  options: SelectOption[] | null;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: any) => void;
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
   className?: string;
+  loading:boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -25,6 +27,7 @@ const Select: React.FC<SelectProps> = ({
   disabled = false,
   required = false,
   className = "",
+   loading
 }) => {
     console.log(required)
   const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +35,10 @@ const Select: React.FC<SelectProps> = ({
   const selectRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const selectedOption = options.find(option => option.value === value);
+  const selectedOption = options?.find(option => option.value === value);
   
   // Filter options based on search term
-  const filteredOptions = options.filter(option => 
+  const filteredOptions = options?.filter(option => 
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -61,7 +64,7 @@ const Select: React.FC<SelectProps> = ({
   }, [isOpen]);
 
   const handleSelect = (option: SelectOption) => {
-    onChange(option.value);
+    onChange(option);
     setIsOpen(false);
     setSearchTerm("");
   };
@@ -75,7 +78,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div className={`relative ${className}`}>
-      <label className="block text-xl font-medium mb-2">{label}</label>
+      <label className="block">{label}</label>
       <div 
         ref={selectRef}
         className={`relative ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
@@ -105,10 +108,12 @@ const Select: React.FC<SelectProps> = ({
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
-            {filteredOptions.length > 0 ? (
-              filteredOptions.map((option) => (
+            {loading ? (<div>
+              <p>Loading...</p>
+            </div>) : filteredOptions && filteredOptions?.length > 0 ? (
+              filteredOptions?.map((option) => (
                 <div
-                  key={option.value}
+                  key={option.id}
                   onClick={() => handleSelect(option)}
                   className={`p-3 hover:bg-gray-100 cursor-pointer ${
                     option.value === value ? 'bg-gray-200' : ''

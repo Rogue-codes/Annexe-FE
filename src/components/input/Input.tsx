@@ -7,8 +7,9 @@ interface Iinput {
   control: Control<any, any>;
   name: any;
   type?: string;
+  disable?: boolean;
 }
-export default function Input({ label, control, name, type }: Iinput) {
+export default function Input({ label, control, name, type, disable }: Iinput) {
   const [inputType, setInputType] = useState(type);
 
   return (
@@ -25,10 +26,11 @@ export default function Input({ label, control, name, type }: Iinput) {
             onChange={(e) => {
               field.onChange(e);
             }}
-            className=" px-4 pb-3 w-full border-b-2 mt-2 bg-white focus:outline-none"
+            className=" disabled:opacity-50  disabled:cursor-not-allowed px-4 pb-3 w-full border-b-2 mt-2 bg-white focus:outline-none"
             type={type ? inputType : "text"}
             name=""
             id=""
+            disabled={disable ? disable : false}
           />
         )}
       />
