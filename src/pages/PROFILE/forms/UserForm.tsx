@@ -1,7 +1,6 @@
 import React from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Input from "../../../components/input/Input";
-import Button from "../../../components/button/Button";
 import { useUpdateUserMutation } from "../../../api/auth.api";
 import { enqueueSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
@@ -47,7 +46,7 @@ export default function UserForm({
   });
   const formVal = watch();
 
-  const [updateUser_, { isLoading, isSuccess }] = useUpdateUserMutation();
+  const [updateUser_, { isLoading }] = useUpdateUserMutation();
 
   const dispatch = useDispatch();
 

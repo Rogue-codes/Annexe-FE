@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IRegisterForm } from "../pages/AUTH/Register";
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL + "";
 
