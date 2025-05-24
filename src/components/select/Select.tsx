@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef, useEffect } from "react";
 
 interface SelectOption {
@@ -25,7 +26,6 @@ const Select: React.FC<SelectProps> = ({
   onChange,
   placeholder = "Select an option",
   disabled = false,
-  required = false,
   className = "",
   loading,
 }) => {
