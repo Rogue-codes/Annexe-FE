@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IRegisterForm } from "../pages/AUTH/Register";
 import { IVerificationForm } from "../pages/AUTH/AccountVerification";
@@ -10,7 +11,12 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
-      const token = Cookies.get("annexe-user-pending-registration");
+      const temp_token = Cookies.get("annexe-user-pending-registration");
+      const token = Cookies.get("annexe-token");
+      if (temp_token) {
+        headers.set("Authorization", `Bearer ${temp_token}`);
+      }
+
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }

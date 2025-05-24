@@ -18,6 +18,7 @@ export interface IUser {
     accountNumber: string;
     accountName: string;
     bank: {
+      id?: string;
       bankName: string;
       bankCode: string;
     };

@@ -21,7 +21,6 @@ export default function RegisterForm({
   onSubmit,
   isLoading,
 }: IRegisterForm_) {
-  console.log("isValid",isValid)
   return (
     <div className="w-[27rem]">
       <p className="text-3xl font-bold py-6">Register</p>

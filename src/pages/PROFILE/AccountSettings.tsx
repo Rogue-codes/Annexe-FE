@@ -25,6 +25,18 @@ export default function AccountSettings({ user }: IAccountSettings) {
     email: user?.email,
     isActive: user?.isActive,
   }
+
+  const userBankObject = {
+    accountNumber: user?.bankDetails[0]?.accountNumber,
+    accountName: user?.bankDetails[0].accountName,
+    bank: {
+      id: user?.bankDetails[0]?.bank.id,
+      label: user?.bankDetails[0]?.bank.bankName,
+      value: user?.bankDetails[0]?.bank.bankCode,
+    }
+  };
+
+
   return (
     <div className="w-full py-12 flex flex-row flex-wrap gap-5 justify-start items-center">
       <div className="w-[48%] p-8 text-[#323232] h-[314px] border border-[#D9D9D9]">
@@ -93,17 +105,17 @@ export default function AccountSettings({ user }: IAccountSettings) {
 
         <div className="flex justify-start items-center gap-4 my-5">
           <p className="font-bold">Account name</p>
-          <p>{user.bankDetails[0].accountName}</p>
+          <p>{user.bankDetails[0]?.accountName}</p>
         </div>
 
         <div className="flex justify-start items-center gap-4 my-5">
           <p className="font-bold">Account number</p>
-          <p>{user.bankDetails[0].accountNumber}</p>
+          <p>{user.bankDetails[0]?.accountNumber}</p>
         </div>
 
         <div className="flex justify-start items-center gap-4 my-5">
           <p className="font-bold">Bank</p>
-          <p>{user.bankDetails[0].bank.bankName}</p>
+          <p>{user.bankDetails[0]?.bank.bankName}</p>
         </div>
 
         <div className="w-full flex justify-end">
@@ -125,9 +137,27 @@ export default function AccountSettings({ user }: IAccountSettings) {
               size={45}
               onClick={() => setShowModal(false)}
             />
-            {selected === "personal" && <UserForm userObject={userObject} setSelected={setSelected} setShowModal={setShowModal} />}
-            {selected === "address" && <AddressForm />}
-            {selected === "bank" && <BankForm />}
+            {selected === "personal" && (
+              <UserForm
+                userObject={userObject}
+                setSelected={setSelected}
+                setShowModal={setShowModal}
+              />
+            )}
+            {selected === "address" && (
+              <AddressForm
+                setSelected={setSelected}
+                setShowModal={setShowModal}
+                stateObj={{ state: user.state, city: user.address }}
+              />
+            )}
+            {selected === "bank" && (
+              <BankForm
+                userBankObject={userBankObject}
+                setSelected={setSelected}
+                setShowModal={setShowModal}
+              />
+            )}
           </div>
         </ModalWrapper>
       )}

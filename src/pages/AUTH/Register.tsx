@@ -23,7 +23,6 @@ export default function Register() {
   } = useForm<IRegisterForm>({});
 
   const formVal = watch();
-  console.log("formVal",formVal)
 
   const isValid = (): boolean => {
     return Boolean(formVal.email) && Boolean(formVal.password);
@@ -33,11 +32,9 @@ export default function Register() {
     register_({ ...formVal })
       .unwrap()
       .then((res: any) => {
-        console.log(res)
         enqueueSnackbar(res?.message, { variant: "success" });
       })
       .catch((err: any) => {
-        console.log(err);
         enqueueSnackbar(`${err?.data?.message}`, { variant: "error" });
       });
   };

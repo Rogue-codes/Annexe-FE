@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { reg } from "../../assets";
 import Input from "../../components/input/Input";
@@ -65,8 +67,6 @@ export default function AccountVerification() {
   const email: string = params.get("email") as string;
   const token: string = params.get("code") as string;
 
-  console.log("params", { email, token });
-
   const [isVerificationSuccess, setIsVerificationSuccess] = useState(false);
 
   const navigate = useNavigate();
@@ -86,7 +86,6 @@ export default function AccountVerification() {
       .then((res) => {
         Cookies.set("annexe-user-pending-registration", res.data.accessToken);
         enqueueSnackbar(res.message, { variant: "success" });
-        console.log(res);
       })
       .catch((err) => {
         enqueueSnackbar(err?.data?.message, { variant: "error" });
@@ -101,7 +100,6 @@ export default function AccountVerification() {
 
   const formVal = watch();
 
-  console.log("formVal", formVal);
 
   const [selectedBank, setSelectedBank] = useState<any>("");
   const [showBankDetails, setShowBankDetails] = useState<boolean>(false);
@@ -121,8 +119,6 @@ export default function AccountVerification() {
         !selectedBank || formVal.bankDetails[0].accountNumber?.length !== 10,
     }
   );
-
-  console.log("account", account?.data);
 
   const banksArray = banks?.data?.data?.map((bank: any) => {
     return {
@@ -152,7 +148,6 @@ export default function AccountVerification() {
       .unwrap()
       .then((res) => {
         enqueueSnackbar(res.message, { variant: "success" });
-        console.log(res);
       })
       .catch((err: any) => {
         if (Array.isArray(err?.data?.message)) {

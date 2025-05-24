@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import { useForm } from "react-hook-form";
 import Input from "../../../components/input/Input";
@@ -50,17 +51,20 @@ export default function UserForm({
 
   const dispatch = useDispatch();
 
-  const handleVerifyBusiness = (values: IPersonalData) => {
+  const handleUpdateUser = (values: IPersonalData) => {
     reset();
     const { status, ...rest } = values;
     updateUser_({ ...rest, isActive: formVal.status })
       .unwrap()
       .then((res) => {
         enqueueSnackbar(res.message, { variant: "success" });
-        dispatch(updateUser(res.data));
+        dispatch(
+          updateUser({
+            user: res?.data,
+          })
+        );
         setSelected("");
         setShowModal(false);
-        console.log(res);
       })
       .catch((err) => {
         enqueueSnackbar(err?.data?.message, { variant: "error" });
@@ -69,7 +73,7 @@ export default function UserForm({
 
   return (
     <div>
-      <form action="" onSubmit={handleSubmit(handleVerifyBusiness)}>
+      <form action="" onSubmit={handleSubmit(handleUpdateUser)}>
         <div className="flex justify-between">
           <div className="w-[48%]">
             <Input name={"firstName"} label="First Name" control={control} />

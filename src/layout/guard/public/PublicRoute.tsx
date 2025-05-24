@@ -12,7 +12,6 @@ const PublicRoute = ({ children }: IPublicRouteProps) => {
     (state: any) => state?.auth?.user
   );
 
-  console.log("user:",user)
 
   if (!user) {
     return children;

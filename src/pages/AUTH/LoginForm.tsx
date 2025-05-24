@@ -35,10 +35,12 @@ export default function LoginForm() {
       .unwrap()
       .then((res) => {
         enqueueSnackbar(res.message, { variant: "success" });
-        dispatch(loginUser({
-          user: res.data,
-          access_token: res.access_token
-        }))
+        dispatch(
+          loginUser({
+            user: res.data,
+            access_token: res?.accessToken,
+          })
+        );
         navigate(paths.PROFILE);
       })
       .catch((err) => {

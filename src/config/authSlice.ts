@@ -13,7 +13,7 @@ const token = Cookies.get("abacus-token");
 const user = localStorage.getItem("annexe-user");
 
 const initialState: IInitialState = {
-  user: user ? JSON.parse(user!) : undefined,
+  user: user ? JSON.parse(user!) : null,
   isAuthenticated: token ? true : false,
 };
 
@@ -34,6 +34,16 @@ export const userSlice = createSlice({
       Cookies.set("annexe-token", action.payload.access_token, {
         expires: 5 / (24 * 60),
       });
+      localStorage.setItem("annexe-user", JSON.stringify(state.user));
+    },
+    updateTempUser: (
+      state,
+      action: PayloadAction<{
+        user: IUser;
+      }>
+    ) => {
+      state.user = action.payload.user;
+
       localStorage.setItem("annexe-user", JSON.stringify(state.user));
     },
     updateUser: (

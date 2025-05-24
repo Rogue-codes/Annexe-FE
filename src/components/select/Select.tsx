@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 interface SelectOption {
-  id:number
+  id: number | string;
   value: string;
   label: string;
 }
 
 interface SelectProps {
-  label: string;
+  label?: string;
   options: SelectOption[] | null;
   value: string;
   onChange: (value: any) => void;
@@ -15,7 +15,7 @@ interface SelectProps {
   disabled?: boolean;
   required?: boolean;
   className?: string;
-  loading:boolean;
+  loading: boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -27,32 +27,34 @@ const Select: React.FC<SelectProps> = ({
   disabled = false,
   required = false,
   className = "",
-   loading
+  loading,
 }) => {
-    console.log(required)
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const selectRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const selectedOption = options?.find(option => option.value === value);
-  
+  const selectedOption = options?.find((option) => option.value === value);
+
   // Filter options based on search term
-  const filteredOptions = options?.filter(option => 
+  const filteredOptions = options?.filter((option) =>
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Handle click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -79,9 +81,11 @@ const Select: React.FC<SelectProps> = ({
   return (
     <div className={`relative ${className}`}>
       <label className="block">{label}</label>
-      <div 
+      <div
         ref={selectRef}
-        className={`relative ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+        className={`relative ${
+          disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
+        }`}
       >
         <div
           onClick={toggleDropdown}
@@ -90,7 +94,7 @@ const Select: React.FC<SelectProps> = ({
           <div className="truncate">
             {selectedOption ? selectedOption.label : placeholder}
           </div>
-          <div className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}>
+          <div className={`transition-transform ${isOpen ? "rotate-180" : ""}`}>
             ▼
           </div>
         </div>
@@ -108,15 +112,17 @@ const Select: React.FC<SelectProps> = ({
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
-            {loading ? (<div>
-              <p>Loading...</p>
-            </div>) : filteredOptions && filteredOptions?.length > 0 ? (
+            {loading ? (
+              <div>
+                <p>Loading...</p>
+              </div>
+            ) : filteredOptions && filteredOptions?.length > 0 ? (
               filteredOptions?.map((option) => (
                 <div
                   key={option.id}
                   onClick={() => handleSelect(option)}
                   className={`p-3 hover:bg-gray-100 cursor-pointer ${
-                    option.value === value ? 'bg-gray-200' : ''
+                    option.value === value ? "bg-gray-200" : ""
                   }`}
                 >
                   {option.label}

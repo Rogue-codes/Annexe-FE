@@ -12,6 +12,7 @@ export default function Home() {
   const isAuthenticated = useSelector(
     (state: any) => state.auth.isAuthenticated
   );
+
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
