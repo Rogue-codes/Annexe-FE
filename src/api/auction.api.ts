@@ -4,6 +4,7 @@ import { IRegisterForm } from "../pages/AUTH/Register";
 import { IVerificationForm } from "../pages/AUTH/AccountVerification";
 import Cookies from "js-cookie";
 import { paths } from "../path/path";
+import { IAuction } from "../pages/PROFILE/UploadAuction";
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL + "";
 
@@ -25,7 +26,11 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-export const baseQueryWithLogout: typeof baseQuery = async (args, api, extraOptions) => {
+export const baseQueryWithLogout: typeof baseQuery = async (
+  args,
+  api,
+  extraOptions
+) => {
   const result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
@@ -36,8 +41,8 @@ export const baseQueryWithLogout: typeof baseQuery = async (args, api, extraOpti
   return result;
 };
 
-export const authApi = createApi({
-  reducerPath: "authApi",
+export const auctionApi = createApi({
+  reducerPath: "auctionApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
@@ -53,12 +58,12 @@ export const authApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["auth"],
+  tagTypes: ["auctions"],
   endpoints: (builder) => ({
-    register: builder.mutation<any, IRegisterForm>({
+    createAuction: builder.mutation<any, IAuction>({
       query: (payload) => {
         return {
-          url: `/user/register`,
+          url: `/auction/create`,
           method: "POST",
           body: payload,
           headers: {
@@ -121,5 +126,10 @@ export const authApi = createApi({
   }),
 });
 
-export const { useRegisterMutation, useVerifyUserMutation, useLoginMutation, useCompleteRegistrationMutation, useUpdateUserMutation } =
-  authApi;
+export const {
+  useCreateAuctionMutation,
+  useVerifyUserMutation,
+  useLoginMutation,
+  useCompleteRegistrationMutation,
+  useUpdateUserMutation,
+} = auctionApi;

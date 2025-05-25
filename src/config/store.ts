@@ -3,16 +3,21 @@ import { useDispatch } from "react-redux";
 import { userSlice } from "./authSlice";
 import { authApi } from "../api/auth.api";
 import { bankApi } from "../api/bank.api";
+import { auctionApi } from "../api/auction.api";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [bankApi.reducerPath]: bankApi.reducer,
+    [auctionApi.reducerPath]: auctionApi.reducer,
     auth: userSlice.reducer,
   },
 
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware).concat(bankApi.middleware),
-
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(bankApi.middleware)
+      .concat(auctionApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

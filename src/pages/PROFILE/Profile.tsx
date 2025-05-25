@@ -1,20 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { reg } from "../../assets";
 import Sidebar from "./Sidebar";
 import OrderTable from "./OrderTable";
 import BidTable from "./BidTable";
 import AccountSettings from "./AccountSettings";
 import { useSelector } from "react-redux";
+import { set } from "react-hook-form";
+import UploadAuction from "./UploadAuction";
+import Earnings from "./Earnings";
 
-const profileTabs = [
-  "Transaction History",
-  "Bidding History",
-  "Auction History",
-  "Account Settings",
+export interface IProfileTabs{
+  label: string;
+  children?:{
+    label: string;
+    value: string;
+  }[]
+} 
+
+
+const profileTabs:IProfileTabs[] = [
+  {
+    label:"Transaction History"
+  },
+  {
+    label: "Bidding History"
+  },
+  {
+    label:"Auction Management",
+    children:[
+      {
+        label: "Auction History",
+        value: "auction-history"
+      },
+      {
+        label: "Upload Auction",
+        value: "upload-auction"
+      },
+      {
+        label: "Earning Report",
+        value: "earning-report"
+      }
+    ]
+  },
+  {
+    label: "Account Settings"
+  }
 ];
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState(0);
+  const [activeChild, setActiveChild] = useState<null | number>(null);
+
+  const [showChildren, setShowChildren] = useState(false);
+
+  useEffect(() => {
+    if( activeTab === 2 ){
+      setShowChildren(true)
+      setActiveChild(0)
+    }else{
+      setShowChildren(false)
+    }
+  }, [activeTab,setActiveTab]);
 
   const user = useSelector((state:any)=>state.auth.user)
   return (
@@ -34,11 +80,16 @@ export default function Profile() {
           tabs={profileTabs}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          setActiveChild={setActiveChild}
+          showChildren={showChildren}
+          activeChild={activeChild}
         />
         <div className="w-[70vw] overflow-y-scroll px-8 pt-6">
           {activeTab === 0 && <OrderTable />}
           {activeTab === 1 && <BidTable />}
-          {activeTab === 2 && <BidTable />}
+          {activeChild === 0 && <BidTable />}
+          {activeChild === 1 && <UploadAuction />}
+          {activeChild === 2 && <Earnings />}
           {activeTab === 3 && <AccountSettings user={user} />}
         </div>
       </div>

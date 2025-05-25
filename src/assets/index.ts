@@ -27,6 +27,7 @@ import google from "./google.svg";
 import user__ from "./user__.svg";
 import forest from "./forest.svg";
 import birds from "./birds.svg";
+import cam from "./cam.svg";
 
 export {
   logo,
@@ -57,5 +58,6 @@ export {
   google,
   user__,
   birds,
-  forest
+  forest,
+  cam
 };

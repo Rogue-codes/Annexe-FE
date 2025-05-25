@@ -32,7 +32,7 @@ export const userSlice = createSlice({
       state.isAuthenticated = !!action.payload.access_token;
 
       Cookies.set("annexe-token", action.payload.access_token, {
-        expires: 5 / (24 * 60),
+        expires: 10 / (24 * 60),
       });
       localStorage.setItem("annexe-user", JSON.stringify(state.user));
     },
@@ -52,6 +52,7 @@ export const userSlice = createSlice({
         user: IUser;
       }>
     ) => {
+      console.log("action.payload.user", action.payload.user);
       state.user = action.payload.user;
 
       localStorage.setItem("annexe-user", JSON.stringify(state.user));
